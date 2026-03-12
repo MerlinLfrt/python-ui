@@ -3,8 +3,8 @@ import time
 
 fb = open("/dev/fb0", "r+b")
 
-width = 1920
-height = 1080
+width = 800
+height = 480
 
 def fill(color):
     r, g, b = color
