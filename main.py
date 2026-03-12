@@ -1,42 +1,34 @@
-import os
-import pygame
+import numpy as np
+import time
 
-# utiliser le framebuffer au lieu de X11 / EGL
-os.environ["SDL_VIDEODRIVER"] = "fbcon"
-os.environ["SDL_FBDEV"] = "/dev/fb0"
+fb = open("/dev/fb0", "r+b")
 
-pygame.init()
+width = 1920
+height = 1080
 
-screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+def fill(color):
+    r, g, b = color
+    pixel = bytes([b, g, r, 0])  # format BGRX
+    frame = pixel * width * height
+    fb.seek(0)
+    fb.write(frame)
 
 while True:
 
-    # rouge -> jaune
     for g in range(256):
-        screen.fill((255, g, 0))
-        pygame.display.update()
+        fill((255, g, 0))
 
-    # jaune -> vert
     for r in range(255, -1, -1):
-        screen.fill((r, 255, 0))
-        pygame.display.update()
+        fill((r, 255, 0))
 
-    # vert -> cyan
     for b in range(256):
-        screen.fill((0, 255, b))
-        pygame.display.update()
+        fill((0, 255, b))
 
-    # cyan -> bleu
     for g in range(255, -1, -1):
-        screen.fill((0, g, 255))
-        pygame.display.update()
+        fill((0, g, 255))
 
-    # bleu -> magenta
     for r in range(256):
-        screen.fill((r, 0, 255))
-        pygame.display.update()
+        fill((r, 0, 255))
 
-    # magenta -> rouge
     for b in range(255, -1, -1):
-        screen.fill((255, 0, b))
-        pygame.display.update()
+        fill((255, 0, b))
